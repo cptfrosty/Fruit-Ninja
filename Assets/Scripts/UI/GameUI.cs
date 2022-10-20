@@ -10,6 +10,7 @@ public class GameUI : MonoBehaviour
     private void Start()
     {
         GameManager.ScoreChangeHandler += OnUpdateScore;
+        OnUpdateScore();
     }
 
     private void OnUpdateScore()

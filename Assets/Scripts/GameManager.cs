@@ -8,8 +8,8 @@ public class GameManager
     public static int Score
     {
         set { 
-            ScoreChangeHandler?.Invoke();
             _score = value;
+            ScoreChangeHandler?.Invoke();
         }
 
         get
@@ -17,5 +17,5 @@ public class GameManager
             return _score;
         }
     }
-    private static int _score;
+    private static int _score = 0;
 }
