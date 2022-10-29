@@ -15,13 +15,26 @@ public class SpawnFruits : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        InvokeRepeating("spawnObject", this.spawnInterval, this.spawnInterval);
+        StartCoroutine(SpawnObject());
     }
-    private void spawnObject()
+
+    IEnumerator SpawnObject()
     {
-        GameObject newObject = Instantiate(this.prefabFruit);
-        newObject.transform.position = new Vector2(Random.Range(this._minFruitX, this._maxFruitX), this._fruitY);
-        Sprite objectSprite = objectSprites[Random.Range(0, this.objectSprites.Length)];
-        newObject.GetComponent<SpriteRenderer>().sprite = objectSprite;
+        while (true)
+        {
+            if (GameManager.CurrentStateGame == GameManager.StatusGame.Play)
+            {
+                GameObject newObject = Instantiate(this.prefabFruit);
+                newObject.transform.position = new Vector2(Random.Range(this._minFruitX, this._maxFruitX), this._fruitY);
+                Sprite objectSprite = objectSprites[Random.Range(0, this.objectSprites.Length)];
+                newObject.GetComponent<SpriteRenderer>().sprite = objectSprite;
+
+                yield return new WaitForSeconds(spawnInterval);
+            }
+            else if (GameManager.CurrentStateGame == GameManager.StatusGame.EndGame)
+            {
+                yield return null;
+            }
+        }
     }
 }
